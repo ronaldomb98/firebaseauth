@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngFor="let personalinfo of personalInfo | async">
+        <button (click)="generatePdf(personalinfo)">Generar Pdf</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <form (submit)="guardar(
+      name.value,
+    deudor.value,
+    deudorNit.value,
+    total.value,
+    concepto.value
+  )">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="container">
+            <label> Nombre del archivo: <input type="text" placeholder="Nombre del archivo" #name></label><br>
+            <label> Deudor: <input type="text" placeholder="Nombre deduor" #deudor></label><br>
+            <label> NIT Deudor: <input type="text" placeholder="Nit Deudor" #deudorNit></label><br>
+            <label> Total: <input type="text" placeholder="Valor Total a Pagar" #total></label><br>
+            <label> Concepto: <input type="text" placeholder="Concepto" #concepto></label><br>
+            <button  class="btn btn-primary">Generar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <button (click)="prueba()">Agregar Items</button>
+    <div *ngFor="let box of boxes">
+      <h5>{{box.item}}</h5>
+      <label>Label de prueba <input [(ngModel)]="box.texto" type="text" placeholder="nombre del concepto"></label>
+      <label>Valor: <input [(ngModel)]="box.precio" type="number" placeholder="Valor del concepto"></label><br>
+    </div>
+  </div>
+</div>

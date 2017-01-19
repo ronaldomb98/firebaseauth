@@ -1,0 +1,36 @@
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+        aria-controls="navbar">
+            <span class="sr-only">Toggle</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+      <a class="navbar-brand" [routerLink]="['/']">Invoice Generator</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a [routerLink]="['/']" *ngIf="!(igs.af.auth | async)">Home</a></li>
+        <li><a [routerLink]="['/about']" *ngIf="!(igs.af.auth | async)">About</a></li>
+        <li><a [routerLink]="['/contact']" *ngIf="!(igs.af.auth | async)">Contact</a></li>
+        <li><a (click)="igs.login()" *ngIf="!(igs.af.auth | async)">LOG IN</a></li>
+        <li *ngIf="(igs.af.auth | async)" class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{igs.user.google.displayName}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a (click)="igs.logout()">Log Out</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li><a [routerLink]="['/user']" *ngIf="(igs. af.auth | async)">User</a></li>
+            <li><a [routerLink]="['/user/personalinfo']" *ngIf="(igs. af.auth | async)">Perfilr</a></li>
+          </ul>
+        </li>
+        <!--<li>
+          <a *ngIf="(af.auth | async)"></a>{{user.email}}</li>
+        <li><a (click)="logout()" *ngIf="(af.auth | async)">LOG OUT</a></li> -->
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+</nav>

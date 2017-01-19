@@ -1,0 +1,70 @@
+<div *ngFor="let info of personalInfo | async">
+  <div class="row">
+    <div class="container">
+      <div class="col-md-12">
+
+        <form (submit)="actualizar(
+          info.$key,
+          nombre.value,
+          cedula.value,
+          direccion.value,
+          telefono.value,
+          cuenta.value,
+          banco.value,
+          email.value
+        )">
+          <div class="row">
+            <div class="col-md-12">
+              <label> Nombre
+                <input type="text" placeholder="Nombre" value="{{info.nombre}}" #nombre>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label> Cedula
+                <input type="number" placeholder="Nombre" value="{{info.cedula}}" #cedula>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label> Dirección
+                <input type="text" placeholder="Nombre" value="{{info.direccion}}" #direccion>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label> Telefono
+                <input type="number" placeholder="Nombre" value="{{info.telefono}}" #telefono>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label> Cuenta
+                <input type="text" placeholder="Nombre" value="{{info.cuenta}}" #cuenta>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label> Banco
+                <input type="text" placeholder="Nombre" value="{{info.banco}}" #banco>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label> Email
+                <input type="text" placeholder="Nombre" value="{{info.email}}" #email>
+              </label>
+            </div>
+          </div>
+          <button class="btn btn-lg btn-primary" type="submit">agregar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

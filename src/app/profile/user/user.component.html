@@ -1,0 +1,31 @@
+<p>
+  user works!
+  <a [routerLink]="['/user']">savedfilest</a>
+  <a [routerLink]="['/user/newinvoice']">newinvoice</a>
+</p>
+<div class="row">
+  <div class="col-md-3">
+    <h3 class="alinear">Menu</h3>
+    <hr>
+    <div class="panel panel-default">
+      <div class="panel-heading alinear">Nueva cuenta de cobro</div>
+      <div class="panel-body alinear">
+        <a [routerLink]="['/user/newinvoice']">Crear</a>
+      </div>
+      <div class="panel-heading alinear">Perfil</div>
+      <div class="panel-body alinear">
+        <a [routerLink]="['/user/personalinfo']">Actualizar Datos</a>
+      </div>
+      <div class="panel-heading alinear">Archivos Guardados</div>
+      <div class="panel-body alinear">
+        <a [routerLink]="['/user/']">Ver</a>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-9">
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
