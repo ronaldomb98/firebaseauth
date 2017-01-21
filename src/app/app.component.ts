@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { InvoicegeneratorService } from './invoicegenerator.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-  constructor() {}
+  constructor(is: InvoicegeneratorService) {}
 }

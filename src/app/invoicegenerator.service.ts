@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, AngularFireModule, AuthProviders, AuthMethods, FirebaseListObservable } from 'angularfire2';
+import { tokenNotExpired } from 'angular2-jwt';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { PersonalInfo } from './profile/personal-info/data';
 
@@ -25,9 +26,9 @@ export const firebaseAuthConfig = {
 @Injectable()
 export class InvoicegeneratorService {
   private doc = new jsPDF('p', 'pt');
-  private items: FirebaseListObservable<any>;
-  private personalInfo: FirebaseListObservable<PersonalInfo[]>;
-  private user: any;
+  public items: FirebaseListObservable<any>;
+  public personalInfo: FirebaseListObservable<PersonalInfo[]>;
+  public user: any;
   constructor(public af: AngularFire, private router: Router) {
     this.loadUser();
   }
@@ -143,7 +144,7 @@ export class InvoicegeneratorService {
     return data;
   }
 
-  
+
 
   public pushInvoice(data) {
     return this.getInvoice(false).push(data);
@@ -167,7 +168,7 @@ export class InvoicegeneratorService {
     return this.doc.text((this.doc.internal.pageSize.width / 2) - (this.doc.getTextWidth(text) / 2), y, text);
   }
 
-  private descargar(data, personalInfo) {
+  public descargar(data, personalInfo) {
     this.doc = new jsPDF();
     //propierties
     this.doc.setProperties({
@@ -225,4 +226,10 @@ export class InvoicegeneratorService {
     this.doc.text(20, 270, personalInfo.cedula);
     this.doc.save('table.pdf');
   }
+
+  public authenticated(){
+        return tokenNotExpired();
+    }
+
+
 }

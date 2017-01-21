@@ -5,9 +5,9 @@ import { HttpModule } from '@angular/http';
 import { AlertModule, CollapseModule } from 'ng2-bootstrap';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { InvoicegeneratorService, firebaseConfig, firebaseAuthConfig } from './invoicegenerator.service';
+import { AUTH_PROVIDERS } from 'angular2-jwt';
 
-
-import { AppRoutingModule } from './app.routing';
+import { AppRoutingModule, appRoutingProviders } from './app.routing';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
@@ -47,7 +47,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     CollapseModule.forRoot()
   ],
-  providers: [InvoicegeneratorService, AuthGuard],
+  providers: [ InvoicegeneratorService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {public _InvoicegeneratorService: InvoicegeneratorService }

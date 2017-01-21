@@ -16,10 +16,6 @@ const routes: Routes = [
 		component: HomeComponent
 	},
 	{
-		path: '**', 
-		component: NotFoundComponent
-	},
-	{
 		path: 'contact',
 		component: ContactComponent
 	},
@@ -29,14 +25,18 @@ const routes: Routes = [
 	},
 	{
 		path: 'user',
-		canActivate: [AuthGuard],
 		component: UserComponent,
+		canActivate: [AuthGuard],
 		children: [
             { path: '', component: SavedfilesComponent, pathMatch: 'full' },
             { path: 'newinvoice', component: NewinvoiceComponent},
 			{ path: 'personalinfo', component: PersonalInfoComponent}
 		]
-	}
+	},
+	{
+		path: '**', 
+		component: NotFoundComponent
+	},
 ];
 
 @NgModule({
@@ -44,3 +44,5 @@ const routes: Routes = [
 	exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+export const appRoutingProviders: any[] = [];

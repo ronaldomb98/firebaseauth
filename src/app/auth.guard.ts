@@ -1,22 +1,26 @@
-import {Injectable} from '@angular/core';
-import {Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import {CanActivate} from '@angular/router';
-import {InvoicegeneratorService} from './invoicegenerator.service';
- 
+import { Injectable } from '@angular/core';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate } from '@angular/router';
+import { InvoicegeneratorService } from './invoicegenerator.service';
+
 @Injectable()
-export class AuthGuard implements CanActivate{
-    constructor(private auth: InvoicegeneratorService, private router: Router){
-        
+export class AuthGuard implements CanActivate {
+    constructor(private auth: InvoicegeneratorService, private router: Router) {
+
     }
-    
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot){
-        if(this.auth.af.auth.getAuth()){
+        let flag;
+        this.auth.af.auth.subscribe(auth => {
+            if (auth!= null) {
+            
             console.log('AUTH GUARD PASSED');
-            return true;
+            flag = true;
         } else {
             console.log('BLOCKED BY AUTH GUARD');
-            this.router.navigate(['/']);
-            return false;
+            flag= false;
         }
+        });
+        return flag;
+        
     }
 }
