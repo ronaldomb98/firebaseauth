@@ -1,3 +1,7 @@
+<ol class="breadcrumb">
+  <li><a [routerLink]="['/user']">Archivos Guardados</a></li>
+  <li class="active">Información Personal</li>
+</ol>
 <div *ngFor="let info of personalInfo | async">
   <div class="row">
     <div class="container">

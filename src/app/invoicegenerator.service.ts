@@ -3,6 +3,7 @@ import { AngularFire, AngularFireModule, AuthProviders, AuthMethods, FirebaseLis
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { PersonalInfo } from './profile/personal-info/data';
 
+declare var jsPDF: any; // Important 
 
 // Must export the config
 export const firebaseConfig = {
@@ -23,10 +24,10 @@ export const firebaseAuthConfig = {
 
 @Injectable()
 export class InvoicegeneratorService {
-  items: FirebaseListObservable<any>;
-  personalInfo: FirebaseListObservable<PersonalInfo[]>;
-  user: any;
-  public cero: number = 0;
+  private doc = new jsPDF('p', 'pt');
+  private items: FirebaseListObservable<any>;
+  private personalInfo: FirebaseListObservable<PersonalInfo[]>;
+  private user: any;
   constructor(public af: AngularFire, private router: Router) {
     this.loadUser();
   }
@@ -92,22 +93,7 @@ export class InvoicegeneratorService {
   public getItems() {
     return this.items;
   }
-  /*
-  prueba() {
-    let prueba: number;
-    let flag: boolean;
-    this.getPersonalInfo(true, this.user.uid).subscribe(data => {
-      console.log("El id del usuario es: " + this.user.uid);
-      prueba = data.length;
-      if (prueba == 0) {
-        flag = false;
-      } else {
-        flag = true;
-      }
-    });
-    return flag;
-  }
-  */
+
   login() {
     this.af.auth.login().then(
       //crea el espacio en la base de datos con datos vacios
@@ -175,5 +161,68 @@ export class InvoicegeneratorService {
     } else {
       return this.af.database.list('invoice');
     }
+  }
+
+  private alignCenter(text, y) {
+    return this.doc.text((this.doc.internal.pageSize.width / 2) - (this.doc.getTextWidth(text) / 2), y, text);
+  }
+
+  private descargar(data, personalInfo) {
+    this.doc = new jsPDF();
+    //propierties
+    this.doc.setProperties({
+      title: 'Invoice',
+      subject: 'Invoice generated',
+      author: 'Ronaldo M',
+      keywords: 'generated, javascript, invoice',
+      creator: 'Ronaldo M'
+    });
+    //variables
+
+    let deudor: string = data.deudor;
+    let deudorNit: string = 'NIT ' + data.deudorNit;
+    let destino: string = personalInfo.nombre;
+    let destinoCc: string = 'C.C. ' + personalInfo.cedula;
+    let total: string = 'La suma de: ' + data.total;
+    let concepto: string = 'Por concepto de ' + data.concepto + ' para:';
+
+    //body
+    this.doc.setFontSize(11);
+    this.doc.setFont('arial');
+    this.doc.setFontStyle('bold');
+    this.doc.text(125, 20, 'CUENTA DE COBRO No. 0001');
+    this.alignCenter(deudor, 30);
+    this.alignCenter(deudorNit, 35);
+    this.alignCenter('DEBE A', 45);
+    this.alignCenter(destino, 50);
+    this.alignCenter(destinoCc, 55);
+    this.doc.text(20, 70, total);
+    this.doc.text(20, 80, concepto);
+    let columns1 = ["Item", "Valor"];
+    this.doc.autoTable(columns1, data.items, {
+      theme: 'plain',
+      tableLineColor: 200, // number, array (see color section below) 
+      margin: { top: 90, left: 20, right: 20 },
+      tableLineWidth: 0.5,
+      fontSize: 11,
+      font: "arial", // helvetica, times, courier
+      fontStyle: 'normal', // normal, bold, italic, bolditalic
+      halign: 'center', // left, center, right 
+      valign: 'middle', // top, middle, bottom 
+    });
+    this.doc.setFontStyle('normal');
+    this.doc.text(20, 155, 'PERTENEZCO AL RÉGIMEN SIMPLIFICADO');
+    this.doc.text(20, 160, 'NO ESTOY OBLIGADO A FACTURAR, NI SOY RESPONSABLE DE IVA');
+    this.doc.text(20, 170, 'Cédula de ciudadanía: ' + personalInfo.cedula);
+    this.doc.text(20, 180, 'Ciudad y fecha: Ibagué, 30 de octubre de 2016');
+    this.doc.text(20, 190, 'Dirección: ' + personalInfo.direccion);
+    this.doc.text(20, 200, 'Teléfono: ' + personalInfo.telefono);
+    this.doc.text(20, 210, 'Correo Electrónico: ' + personalInfo.correo);
+    this.doc.text(20, 220, 'Favor consignar a mi cuenta de ahorros #' + personalInfo.cuenta + ' de ' + personalInfo.banco + '.');
+    this.doc.setFontStyle('bold');
+    this.doc.text(20, 255, '_________________________________');
+    this.doc.text(20, 260, (personalInfo.nombre).toUpperCase());
+    this.doc.text(20, 270, personalInfo.cedula);
+    this.doc.save('table.pdf');
   }
 }

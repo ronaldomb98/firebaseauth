@@ -20,22 +20,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import {AuthGuard} from './auth.guard';
 import { PersonalInfoComponent } from './profile/personal-info/personal-info.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
-// Must export the config
-/*export const firebaseConfig = {
-  apiKey: 'AIzaSyCTNcoyeUO-0G0x42hj0T3K5o2Y9T_kxy4',
-  authDomain: 'fir-invoicegenerator.firebaseapp.com',
-  databaseURL: 'https://fir-invoicegenerator.firebaseio.com',
-  storageBucket: 'fir-invoicegenerator.appspot.com',
-  messagingSenderId: '279649067231'
-};
-
-const firebaseAuthConfig = {
-  provider: AuthProviders.Google,
-  method: AuthMethods.Popup,
-  
-};
-*/
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +35,7 @@ const firebaseAuthConfig = {
     HeaderComponent,
     FooterComponent,
     PersonalInfoComponent,
+    NotFoundComponent,
     
   ],
   imports: [
