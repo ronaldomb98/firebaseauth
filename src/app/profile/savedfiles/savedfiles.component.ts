@@ -26,7 +26,7 @@ export class SavedfilesComponent implements OnInit {
     this.items = is.getInvoice(true, is.user.uid);
     this.personalInfo = is.getPersonalInfo(true, is.user.uid);
     this.name = "";
-    console.log(this.items.toArray.length.toPrecision());
+    
 
 
   }

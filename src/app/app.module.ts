@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { AlertModule, CollapseModule } from 'ng2-bootstrap';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { InvoicegeneratorService, firebaseConfig, firebaseAuthConfig } from './invoicegenerator.service';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
@@ -43,9 +42,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    AlertModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
-    CollapseModule.forRoot()
+
   ],
   providers: [ InvoicegeneratorService, AuthGuard],
   bootstrap: [AppComponent]
