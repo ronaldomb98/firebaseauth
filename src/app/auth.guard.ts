@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { CanActivate } from '@angular/router';
 import { InvoicegeneratorService } from './invoicegenerator.service';
+import { HomeComponent } from './components/home/home.component';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,6 +18,7 @@ export class AuthGuard implements CanActivate {
             flag = true;
         } else {
             console.log('BLOCKED BY AUTH GUARD');
+            this.router.navigate(['/']);
             flag= false;
         }
         });

@@ -1,0 +1,11 @@
+.btnguardar{
+    text-align: right;
+    padding: 10px;
+}
+.panel{
+    padding: 10px;
+}
+
+.panel .form-group{
+    padding: 5px;
+}

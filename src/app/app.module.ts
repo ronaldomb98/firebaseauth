@@ -50,4 +50,4 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
   providers: [ InvoicegeneratorService, AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule {public _InvoicegeneratorService: InvoicegeneratorService }
+export class AppModule {}

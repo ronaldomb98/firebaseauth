@@ -1,34 +1,33 @@
-<ol class="breadcrumb">
-  <li><a [routerLink]="['/user']">Archivos Guardados</a></li>
-  <li class="active">Nueva Cuenta de Cobro</li>
-</ol>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-7">
+    <ol class="breadcrumb">
+      <li><a [routerLink]="['/user']">Archivos Guardados</a></li>
+      <li class="active">Nueva Cuenta de Cobro</li>
+    </ol>
     <div *ngFor="let personalinfo of personalInfo | async">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="container">
-            <div class="form-group">
-              <label for="nombreArchivoid"> Nombre del archivo:</label>
-              <input id="nombreArchivoid" required class="form-control" type="text" placeholder="Nombre del archivo" #name>
-            </div>
-            <div class="form-group">
-              <label for="deudorid"> Deudor: </label>
-              <input id="deudorid" class="form-control" type="text" placeholder="Nombre deduor" #deudor>
-            </div>
-            <div class="form-group">
-              <label for="nitdeudorid"> NIT Deudor: </label>
-              <input id="nitdeudorid" class="form-control" type="text" placeholder="Nit Deudor" #deudorNit>
-            </div>
-            <div class="form-group">
-              <label for="totalid"> Total: </label>
-              <input id="totalid" class="form-control" type="text" placeholder="Valor Total a Pagar" #total>
-            </div>
-            <div class="form-group">
-              <label for="conceptoid"> Concepto: </label>
-              <input id="conceptoid" class="form-control" type="text" placeholder="Concepto" #concepto>
-            </div>
-            <button (click)="prueba()">Agregar Items</button>
+      <div class="form-group">
+        <label for="nombreArchivoid"> Nombre del archivo:</label>
+        <input id="nombreArchivoid" required class="form-control" type="text" placeholder="Nombre del archivo" #name>
+      </div>
+      <div class="form-group">
+        <label for="deudorid"> Deudor: </label>
+        <input id="deudorid" class="form-control" type="text" placeholder="Nombre deduor" #deudor>
+      </div>
+      <div class="form-group">
+        <label for="nitdeudorid"> NIT Deudor: </label>
+        <input id="nitdeudorid" class="form-control" type="text" placeholder="Nit Deudor" #deudorNit>
+      </div>
+      <div class="form-group">
+        <label for="totalid"> Total: </label>
+        <input id="totalid" class="form-control" type="text" placeholder="Valor Total a Pagar" #total>
+      </div>
+      <div class="form-group">
+        <label for="conceptoid"> Concepto: </label>
+        <input id="conceptoid" class="form-control" type="text" placeholder="Concepto" #concepto>
+      </div>
+      
+        <div class="panel panel-default">
+          <div class="panel-body">
             <div class="form-inline" *ngFor="let box of boxes">
               <div class="form-group">
                 <label for="boxidc">Label de prueba</label>
@@ -39,16 +38,22 @@
               <label for="boxidv">Valor: </label>
               <input id="boxidv" class="form-control" [(ngModel)]="box.precio" type="number" placeholder="Valor del concepto">
             </div>
-            <button type="submit" class="btn btn-primary" (click)="guardar(
+            <button class="btn btn-danger" (click)="prueba()">Agregar Items</button>
+          </div>
+        </div>
+      
+      
+
+      <div class="btnguardar">
+        <button type="submit" class="btn btn-primary" (click)="guardar(
                                                                 name.value,
                                                                 deudor.value,
                                                                 deudorNit.value,
                                                                 total.value,
-                                                                concepto.value)">Generar</button>
-            <div id="faltanDatos"></div>
-          </div>
-        </div>
+                                                                concepto.value)">Guardar</button>
       </div>
+
+      <div id="faltanDatos"></div>
     </div>
   </div>
 </div>

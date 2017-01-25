@@ -1,14 +1,29 @@
-<ol class="breadcrumb">
-    <li class="active">Archivos Guardados</li>
-  </ol>
-<div *ngIf="(is.af.auth | async)" class="container">
-  <div *ngFor="let personalinfo of personalInfo | async">
-    <ul>
-      <li *ngFor="let item of items | async"> {{ item.name }}
-        <button type="button" class="btn btn-primary" (click)="descargar(item, personalinfo)">Descargar</button>
-        <button class="btn btn-warning" type="button" (click)="deleteDatos(item.$key)">borrar</button>
-        <hr>
-      </li>
-    </ul>
-  </div>  
+<div class="row">
+  <div class="col-md-8">
+    <ol class="breadcrumb">
+      <li class="active">Archivos Guardados</li>
+    </ol>
+    <div *ngIf="(is.af.auth | async)">
+      <div *ngFor="let personalinfo of personalInfo | async">
+        <ul class="list-group">
+          <h1><strong>Archivos Guardados</strong></h1>
+          <li class="list-group-item" *ngFor="let item of items | async">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="itemname">
+                  {{ item.name }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="buttons">
+                  <button type="button" class="btn btn-primary" (click)="descargar(item, personalinfo)">Descargar</button>
+                  <button class="btn btn-warning" type="button" (click)="deleteDatos(item.$key)">borrar</button>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>

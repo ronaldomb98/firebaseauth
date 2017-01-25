@@ -18,10 +18,7 @@ export const firebaseConfig = {
 export const firebaseAuthConfig = {
   provider: AuthProviders.Google,
   method: AuthMethods.Popup,
-
 };
-
-
 
 @Injectable()
 export class InvoicegeneratorService {
@@ -63,8 +60,6 @@ export class InvoicegeneratorService {
   public pushPersonalInfo(personalInfo) {
     return this.getPersonalInfo(false).push(personalInfo);
   }
-
-
 
   public listData() {
     return this.af.database.list('/items')
@@ -119,10 +114,11 @@ export class InvoicegeneratorService {
       });
 
   }
+
   logout() {
     this.af.auth.logout();
-
   }
+  
   loadUser() {
     this.af.auth.subscribe(auth => {
       this.user = auth;
@@ -227,9 +223,9 @@ export class InvoicegeneratorService {
     this.doc.save('table.pdf');
   }
 
-  public authenticated(){
-        return tokenNotExpired();
-    }
+  public authenticated() {
+    return tokenNotExpired();
+  }
 
 
 }
