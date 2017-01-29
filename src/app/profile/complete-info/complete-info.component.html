@@ -1,17 +1,9 @@
-<div class="row">
-  <div class="col-md-8">
-    <ol class="breadcrumb">
-      <li><a [routerLink]="['/user']">Archivos Guardados</a></li>
-      <li class="active">Información Personal</li>
-    </ol>
-  </div>
-</div>
-
 <div *ngFor="let info of personalInfo | async">
   <div class="row">
-    <div class="col-md-8">
-      <div class="alert alert-success" role="alert" [hidden]="_infoActua">
-        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{mensaje}}
+    <div class="col-md-12">
+      <div class="alert alert-success" role="alert" [hidden]="infoActua">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        {{_mensaje}} 
       </div>
       <form (submit)="actualizar(
           info.$key,
@@ -55,7 +47,7 @@
           <input id="emailid" class="form-control" required type="email" placeholder="example@mail.com" value="{{info.email}}" #email>
         </div>
         <div class="botonA">
-          <button class="btn btn-lg btn-primary">Actualizar</button>
+          <button class="btn btn-lg btn-primary" type="submit">Actualizar</button>
         </div>
       </form>
     </div>

@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from '../../components/header/header.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { InvoicegeneratorService } from '../../invoicegenerator.service';
+import { PersonalInfoComponent } from '../personal-info/personal-info.component';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
-  viewProviders: [HeaderComponent],
   providers: [InvoicegeneratorService]
 })
 export class UserComponent implements OnInit {
 
-  constructor(private is: InvoicegeneratorService) { }
+  constructor() {
+    
+   }
 
   ngOnInit() {
   }

@@ -35,7 +35,9 @@ export class NewinvoiceComponent implements OnInit {
   ngOnInit() { }
 
   prueba(): void {
+    this.num++;
     this.boxes.push({
+      num: this.num,
       texto: null,
       precio: null
     });
@@ -76,8 +78,8 @@ export class NewinvoiceComponent implements OnInit {
     } else {
       this.boxes.forEach(element => {
         this.rows3.push([
-          element.texto,
-          element.precio
+          '- '+element.texto,
+          '$ '+element.precio
         ]
         );
       });

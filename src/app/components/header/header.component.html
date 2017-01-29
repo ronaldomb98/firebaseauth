@@ -10,20 +10,24 @@
           </button>
       <a class="navbar-brand" [routerLink]="['/']">Invoice Generator</a>
     </div>
-    <div id="navbar" class="collapse navbar-collapse">
+    <div id="navbar" class="collapse navbar-collapse" *ngIf="!(igs.af.auth | async)">
       <ul class="nav navbar-nav navbar-right">
-        <li><a [routerLink]="['/']" *ngIf="!(igs.af.auth | async)">Home</a></li>
-        <li><a [routerLink]="['/about']" *ngIf="!(igs.af.auth | async)">About</a></li>
-        <li><a [routerLink]="['/contact']" *ngIf="!(igs.af.auth | async)">Contact</a></li>
-        <li><a (click)="igs.login()" *ngIf="!(igs.af.auth | async)">LOG IN</a></li>
-        <li *ngIf="(igs.af.auth | async)" class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{igs.user.google.displayName}} <span class="caret"></span></a>
+        <li><a [routerLink]="['/']">Inicio</a></li>
+        <!--<li><a [routerLink]="['/about']">Nosotros</a></li>
+        <li><a [routerLink]="['/contact']" >Contactenos</a></li>-->
+        <li><a (click)="login()" >Iniciar sesion con Gmail</a></li>
+      </ul>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse" *ngIf="(igs.af.auth | async)">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a (click)="igs.logout()">Log Out</a></li>
+            <li><a [routerLink]="['/user/newinvoice']">Crear Nueva Cuenta</a></li>
+            <li><a [routerLink]="['/user/personalinfo']">Actualizar Informacion</a></li>
+            <li><a [routerLink]="['/user']">Archivos Guardados</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li><a [routerLink]="['/user']" *ngIf="(igs. af.auth | async)">User</a></li>
-            <li><a [routerLink]="['/user/personalinfo']" *ngIf="(igs. af.auth | async)">Perfilr</a></li>
+            <li><a (click)="logout()">Cerrar Sesion</a></li>
           </ul>
         </li>
       </ul>

@@ -1,32 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseListObservable } from 'angularfire2';
 import { InvoicegeneratorService } from '../../invoicegenerator.service';
-import { MessageControlService } from '../../message-control.service';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 @Component({
-  selector: 'app-personal-info',
-  templateUrl: './personal-info.component.html',
-  styleUrls: ['./personal-info.component.css'],
+  selector: 'app-complete-info',
+  templateUrl: './complete-info.component.html',
+  styleUrls: ['./complete-info.component.css'],
   providers: [InvoicegeneratorService]
 })
-export class PersonalInfoComponent implements OnInit {
+export class CompleteInfoComponent implements OnInit {
   personalInfo: FirebaseListObservable<any>;
   info: any[];
-  _infoActua: boolean = true;
-  static _mensaje: string;
-  mensaje: string;
-  constructor(public is: InvoicegeneratorService, private router: Router, private messageControl: MessageControlService) {
-
+  _infoActua: boolean = false;
+  _mensaje: string;
+  constructor(public is: InvoicegeneratorService, private router: Router) {
     this.personalInfo = this.is.getPersonalInfo(true, this.is.user.uid);
   }
 
   ngOnInit() {
-
-  }
-
-  ngDoCheck() {
-    this.mensaje = this.messageControl.mensaje;
-    this._infoActua = this.messageControl.flag;
+    
   }
 
   actualizar(key, nombre, cedula, direccion, telefono, cuenta, banco, email) {
@@ -41,11 +33,21 @@ export class PersonalInfoComponent implements OnInit {
       email: email
     }
     console.log(data);
-    this.is.updatePersonalInfo(key, data);
-    this.messageControl.flag = true;
-    this.router.navigate(['/user']);
+    this.is.updatePersonalInfo(key,data);
+    this._mensaje = "Informacion Actualizada";
+/*
+    this.is.updatePersonalInfo(key, nombre, cedula, direccion, telefono, cuenta, banco, email);
+    this._mensaje = "Informacion Actualizada";
+    setTimeout(() => {
+      this.router.navigateByUrl('/user');
+    }, 1000);
+    */
+    
+
   }
 
-
+  setMensaje(mensaje) {
+    this._mensaje = mensaje;
+  }
 
 }

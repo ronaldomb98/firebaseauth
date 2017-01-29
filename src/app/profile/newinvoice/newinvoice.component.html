@@ -30,7 +30,7 @@
           <div class="panel-body">
             <div class="form-inline" *ngFor="let box of boxes">
               <div class="form-group">
-                <label for="boxidc">Label de prueba</label>
+                <label for="boxidc">Item {{box.num}}</label>
                 <input id="boxidc" class="form-control" [(ngModel)]="box.texto" type="text" placeholder="nombre del concepto">
               </div>
               <div class="form-group">

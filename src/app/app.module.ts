@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { InvoicegeneratorService, firebaseConfig, firebaseAuthConfig } from './invoicegenerator.service';
+import { MessageControlService } from './message-control.service';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 
 import { AppRoutingModule, appRoutingProviders } from './app.routing';
@@ -20,6 +21,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import {AuthGuard} from './auth.guard';
 import { PersonalInfoComponent } from './profile/personal-info/personal-info.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { CompleteInfoComponent } from './profile/complete-info/complete-info.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     FooterComponent,
     PersonalInfoComponent,
     NotFoundComponent,
+    CompleteInfoComponent,
     
   ],
   imports: [
@@ -45,7 +48,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
 
   ],
-  providers: [ InvoicegeneratorService, AuthGuard],
+  providers: [ InvoicegeneratorService, AuthGuard, MessageControlService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

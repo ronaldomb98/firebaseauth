@@ -9,14 +9,27 @@ import { InvoicegeneratorService } from '../../invoicegenerator.service';
   providers: [InvoicegeneratorService]
 })
 export class HeaderComponent implements OnInit {
-  
-  constructor(private igs: InvoicegeneratorService) { }
-
-  ngOnInit() {
-  }
-
-  ngDoCheck(){
+  private myName: string;
+  constructor(private igs: InvoicegeneratorService) {
     
   }
 
+  ngOnInit() {
+  }
+  ngDoCheck() {
+
+    
+  }
+
+  ngOnChanges(){
+    
+  }
+
+  login() {
+    this.igs.login();
+  }
+
+  logout() {
+    this.igs.logout();
+  }
 }

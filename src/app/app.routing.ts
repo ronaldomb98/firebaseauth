@@ -8,8 +8,10 @@ import { SavedfilesComponent } from './profile/savedfiles/savedfiles.component';
 import { NewinvoiceComponent } from './profile/newinvoice/newinvoice.component';
 import { UserComponent } from './profile/user/user.component';
 import { PersonalInfoComponent } from './profile/personal-info/personal-info.component';
+import { CompleteInfoComponent } from './profile/complete-info/complete-info.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import {AuthGuard} from './auth.guard';
+
+import { AuthGuard } from './auth.guard';
 const routes: Routes = [
 	{
 		path: '',
@@ -28,13 +30,17 @@ const routes: Routes = [
 		component: UserComponent,
 		canActivate: [AuthGuard],
 		children: [
-            { path: '', component: SavedfilesComponent, pathMatch: 'full' },
-            { path: 'newinvoice', component: NewinvoiceComponent},
-			{ path: 'personalinfo', component: PersonalInfoComponent}
+			{ path: '', component: SavedfilesComponent },
+			{ path: 'newinvoice', component: NewinvoiceComponent },
+			{ path: 'personalinfo', component: PersonalInfoComponent }
 		]
 	},
 	{
-		path: '**', 
+		path: 'completeInfo',
+		component: CompleteInfoComponent
+	},
+	{
+		path: '**',
 		component: NotFoundComponent
 	},
 ];

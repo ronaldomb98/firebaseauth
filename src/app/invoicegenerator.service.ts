@@ -1,8 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ViewChild } from '@angular/core';
 import { AngularFire, AngularFireModule, AuthProviders, AuthMethods, FirebaseListObservable } from 'angularfire2';
-import { tokenNotExpired } from 'angular2-jwt';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { PersonalInfoComponent } from './profile/personal-info/personal-info.component';
 import { PersonalInfo } from './profile/personal-info/data';
+import "rxjs/add/operator/filter";
+import "rxjs/add/operator/first";
+import "rxjs/Subscriber";
+
+import { MessageControlService } from './message-control.service';
 
 declare var jsPDF: any; // Important 
 
@@ -22,17 +27,21 @@ export const firebaseAuthConfig = {
 
 @Injectable()
 export class InvoicegeneratorService {
+
   private doc = new jsPDF('p', 'pt');
   public items: FirebaseListObservable<any>;
   public personalInfo: FirebaseListObservable<PersonalInfo[]>;
   public user: any;
-  constructor(public af: AngularFire, private router: Router) {
+  public _mensaje: string;
+  public _infoActua: boolean;
+  public num: any;
+  constructor(public af: AngularFire, private router: Router, private messageControl: MessageControlService) {
     this.loadUser();
+
   }
 
   public getPersonalInfo(specific: boolean, id?: string) {
     if (specific == true) {
-      console.log("esta es la info de getPersonalInfo() " + specific + "" + id);
       return this.af.database.list('user', {
         query: {
           orderByChild: 'id',
@@ -44,16 +53,7 @@ export class InvoicegeneratorService {
     }
   }
 
-  public updatePersonalInfo(key, nombre, cedula, direccion, telefono, cuenta, banco, email) {
-    let data = {
-      nombre: nombre,
-      cedula: cedula,
-      direccion: direccion,
-      telefono: telefono,
-      cuenta: cuenta,
-      banco: banco,
-      email: email
-    }
+  public updatePersonalInfo(key, data) {
     return this.getPersonalInfo(false).update(key, data)
   }
 
@@ -78,47 +78,55 @@ export class InvoicegeneratorService {
     return this.items.push({ name: newName });
   }
 
-  public updateData() {
-
-  }
-
-  public deleteData() {
-
-  }
-
   public getItems() {
     return this.items;
   }
 
   login() {
     this.af.auth.login().then(
-      //crea el espacio en la base de datos con datos vacios
       () => {
         let prueba: number;
         this.getPersonalInfo(true, this.user.uid).subscribe(data => {
           prueba = data.length;
           if (prueba == 0) {
+            if(this.messageControl.cantPi == null){
             this.pushPersonalInfo(this.getArrayPI(this.user.google.displayName, this.user.google.email));
-            console.log("se ha creado un espacio en user");
+            }
+            this.messageControl.mensaje = "Para completar su registro, porfavor diligencie el formulario";
+            this.messageControl.cantPi = 0;
+            this.messageControl.flag = false;
           } else {
-            console.log("El usuario ya tiene espacio en user");
+            this.messageControl.mensaje = "";
+            this.messageControl.cantPi = 1;
+            this.messageControl.flag = true;
           }
         });
       }
     ).then(
-      (userLoged) => {
-        this.router.navigate(['/user']);
+      () => {
+            this.router.navigate(['/user/personalinfo']);
       }
       ).catch((error) => {
         console.log(error)
       });
+
+
+  }
+
+  valid() {
+    var flag: boolean;
+    this.getPersonalInfo(true, this.user.google.uid).subscribe((info) => {
+      if (info.length == 0) { flag = true }
+    }
+    );
+    console.log(flag);
 
   }
 
   logout() {
     this.af.auth.logout();
   }
-  
+
   loadUser() {
     this.af.auth.subscribe(auth => {
       this.user = auth;
@@ -140,15 +148,12 @@ export class InvoicegeneratorService {
     return data;
   }
 
-
-
   public pushInvoice(data) {
     return this.getInvoice(false).push(data);
   }
 
   public getInvoice(specific: boolean, id?: string) {
     if (specific == true) {
-      console.log("esta es la info de getInvoice() " + specific + "" + id);
       return this.af.database.list('invoice', {
         query: {
           orderByChild: 'id',
@@ -182,7 +187,6 @@ export class InvoicegeneratorService {
     let destinoCc: string = 'C.C. ' + personalInfo.cedula;
     let total: string = 'La suma de: ' + data.total;
     let concepto: string = 'Por concepto de ' + data.concepto + ' para:';
-
     //body
     this.doc.setFontSize(11);
     this.doc.setFont('arial');
@@ -201,11 +205,10 @@ export class InvoicegeneratorService {
       tableLineColor: 200, // number, array (see color section below) 
       margin: { top: 90, left: 20, right: 20 },
       tableLineWidth: 0.5,
-      fontSize: 11,
       font: "arial", // helvetica, times, courier
       fontStyle: 'normal', // normal, bold, italic, bolditalic
       halign: 'center', // left, center, right 
-      valign: 'middle', // top, middle, bottom 
+      valign: 'middle' // top, middle, bottom 
     });
     this.doc.setFontStyle('normal');
     this.doc.text(20, 155, 'PERTENEZCO AL RÉGIMEN SIMPLIFICADO');
@@ -223,9 +226,17 @@ export class InvoicegeneratorService {
     this.doc.save('table.pdf');
   }
 
-  public authenticated() {
-    return tokenNotExpired();
+  public get getMensaje() {
+    return this._mensaje;
   }
 
-
+  public get getInfoActua() {
+    return this._infoActua;
+  }
+  public set setMensaje(mensaje) {
+    this._mensaje = mensaje;
+  }
+  public set setInfoActua(infoActua) {
+    this._infoActua = infoActua;
+  }
 }
